@@ -36,17 +36,21 @@ elseif($_GET['act'] == 'queryAll'){
     $hr=$_POST['hr'];
 
     if(!empty($hr['userName'])){
-        $user_sql = "SELECT id FROM user WHERE name LIKE '%".$hr['userName']."%'";
-        $user_stmt =$pdo->prepare($user_sql);
-        $user_stmt ->execute();
-        $userIds=array();
-        while ($user = $user_stmt->fetch(PDO::FETCH_ASSOC)) {
-            array_push($userIds,$user['id']);
+        if($hr['userName']=="undefined"){
+            $sql="SELECT * FROM home_repair WHERE userId = 0 ";
+        }else{
+            $user_sql = "SELECT id FROM user WHERE name LIKE '%".$hr['userName']."%'";
+            $user_stmt =$pdo->prepare($user_sql);
+            $user_stmt ->execute();
+            $userIds=array();
+            while ($user = $user_stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push($userIds,$user['id']);
+            }
+            if($user_stmt->rowCount()==0){
+                array_push($userIds,-1001);
+            }
+            $sql="SELECT * FROM home_repair WHERE userId IN (".implode(',',$userIds).")";
         }
-        if($user_stmt->rowCount()==0){
-            array_push($userIds,-1001);
-        }
-        $sql="SELECT * FROM home_repair WHERE userId IN (".implode(',',$userIds).")";
         if($hr['state']!=-1) {
             $sql .= "AND state =" . $hr['state'];
         }
@@ -66,7 +70,7 @@ elseif($_GET['act'] == 'queryAll'){
     $pageSize = $_POST['pageSize'];
     $pageSum = ceil($count/$pageSize);
     $start =($pageNum-1)*$pageSize;
-    $sql.=" ORDER BY createDate ASC LIMIT $start,$pageSize";//按创建时间升序排列
+    $sql.=" ORDER BY id desc LIMIT $start,$pageSize";//按创建时间升序排列
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $result = array();

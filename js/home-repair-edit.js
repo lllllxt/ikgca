@@ -45,6 +45,7 @@ if (sessionStorage.action == 'update') {
     url = '../service/HomeRepairAction.php?act=update&';
 }
 else if (sessionStorage.action == 'add') {
+    $(".userName").addClass("hidden");
     if(sessionStorage.selUserId){
         $("[name='userId']").val(sessionStorage.selUserId);
         $("[name='userName']").val(sessionStorage.selUserName);

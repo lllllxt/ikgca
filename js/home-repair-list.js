@@ -77,7 +77,6 @@ function addFlow(){
 }
 //删除
 function deleteById(id) {
-
     if(confirm('确实要删除该内容吗?')){
         $.ajax({
             type: "post",

@@ -1,49 +1,43 @@
-<!--<style>-->
-    <!--.item{-->
-        <!--cursor:pointer;-->
-    <!--}-->
-<!--</style>-->
-<!--<script>-->
-    <!--$('.carousel').carousel({ interval: 1000 })-->
-<!--</script>-->
-<!--&lt;!&ndash;轮播&ndash;&gt;-->
-<!--<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">-->
-    <!--&lt;!&ndash; Indicators &ndash;&gt;-->
-    <!--<ol class="carousel-indicators">-->
-        <!--<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>-->
-        <!--<li data-target="#carousel-example-generic" data-slide-to="1" class=""></li>-->
-        <!--<li data-target="#carousel-example-generic" data-slide-to="2" class=""></li>-->
-    <!--</ol>-->
-
-    <!--&lt;!&ndash; Wrapper for slides &ndash;&gt;-->
-    <!--<div class="carousel-inner" role="listbox">-->
-        <!--<div class="item active" onclick=" $('#body').load('home-repair-list.html');">-->
-            <!--<img src="../images/bg1.jpg" alt="..." style=" width:100%;height:500px;">-->
-            <!--<div class="carousel-caption">-->
-                <!--Title-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="item" onclick="$('#body').load('notice-list.html');">-->
-            <!--<img src="../images/bg2.jpg" alt="..." style=" width:100%;height:500px;">-->
-            <!--<div class="carousel-caption">-->
-                <!--Title-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="item"  onclick="$('#body').load('tool-flow.html');">-->
-            <!--<img src="../images/bg3.jpg" alt="..." style=" width:100%;height:500px;">-->
-            <!--<div class="carousel-caption">-->
-                <!--Title-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-
-    <!--&lt;!&ndash; Controls &ndash;&gt;-->
-    <!--<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">-->
-        <!--<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>-->
-        <!--<span class="sr-only">Previous</span>-->
-    <!--</a>-->
-    <!--<a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">-->
-        <!--<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>-->
-        <!--<span class="sr-only">Next</span>-->
-    <!--</a>-->
-<!--</div>-->
+<style>
+    .weather{
+        position: fixed;
+        bottom:60px;
+        left: -850px;
+        z-index: 10086;
+        transition: left 1s;
+    }
+</style>
+<div class="weather">
+    <iframe allowtransparency="true" frameborder="0" width="875" height="98" scrolling="no"
+            style="background-color: #101010;"
+            src="http://tianqi.2345.com/plugin/widget/index.htm?s=2&z=2&t=1&v=0&d=5&bd=0&k=000000&f=ffffff&q=1&e=1&a=1&c=71256&w=875&h=98&align=center"></iframe>
+    <script>
+        $(".weather").mouseover(function(){
+            $(".weather").css("left",0);
+        }).mouseout(function(){
+            $(".weather").css("left","-850px");
+        });
+    </script>
+</div>
+<div class="shangmen">
+    <h2>本月上门排行榜</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th style=''>名次</th>
+            <th style=''>姓名</th>
+            <th style=''>数量</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>张三</td>
+                <td>14</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="huodong">
+    <h2>本月活动概要</h2>
+</div>
