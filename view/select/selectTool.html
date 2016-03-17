@@ -1,0 +1,124 @@
+<!--queryFrom-->
+<div class="block">
+    <div class="margin-10"></div>
+    <form class="form-inline list-form" id="queryFrom-select">
+        <div class="form-group">
+            <label class="sr-only" for="name">名称</label>
+            <input type="text" class="form-control" id="name" placeholder="名称关键字">
+        </div>
+        <button type="submit" class="btn btn-default">查询</button>
+    </form>
+    <div class="margin-10"></div>
+</div>
+<div class="margin-10"></div>
+<!--table-->
+<div class="block">
+    <div class="table-responsive" id="select-table">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>名称</th>
+                <th>备注</th>
+            </tr>
+            </thead>
+            <tbody>
+                <!--<tr>-->
+                    <!--<td>张三</td>-->
+                    <!--<td>12345645678911</td>-->
+                <!--</tr>-->
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--分页导航-->
+<nav class="text-center" >
+    <ul class="pagination" id="sel-page-nav">
+        <!--<li>-->
+        <!--<a href="#" aria-label="Previous">-->
+        <!--<span aria-hidden="true">&laquo;</span>-->
+        <!--</a>-->
+        <!--</li>-->
+        <!--<li><a href="#">1</a></li>-->
+        <!--<li><a href="#">2</a></li>-->
+        <!--<li><a href="#">3</a></li>-->
+        <!--<li><a href="#">4</a></li>-->
+        <!--<li><a href="#">5</a></li>-->
+        <!--<li>-->
+        <!--<a href="#" aria-label="Next">-->
+        <!--<span aria-hidden="true">&raquo;</span>-->
+        <!--</a>-->
+        <!--</li>-->
+    </ul>
+</nav>
+<div class="margin-10" id="msg"></div>
+<div class="text-center">
+    <button type="button" class="btn btn-primary" onclick="sure()">确定</button>
+    <button type="button" class="btn btn-default" onclick="javascript:$('.modal-body').load('../view/tool-flow-edit.html');">返回</button>
+</div>
+<!--js-->
+<script>
+    $(".modal-title").html("选择工具");
+    var tool = {};
+    var pageSize=10;//分页容量
+    var pageNum=1; //默认页数
+    //获取列表
+    $('#queryFrom-select').submit(function () {
+        //获取搜索框内容
+        tool.name = $('#name').val();
+        // 提交表单
+        $(this).ajaxSubmit({
+            type: "POST",
+            url: '../service/ToolAction.php?act=queryNR&',
+            data: {
+                'tool': tool,
+                'pageSize': pageSize,
+                'pageNum': pageNum
+            },
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                $('#select-table tbody tr').remove();
+                for (var i = 0; i < data.length-1; i++) {
+                    $('#select-table tbody').append("<tr onclick=selTool("+data[i].id+",'"+data[i].name+"')>" +
+                    "<td>"+data[i].name+"</td>" +
+                    "<td>"+data[i].remark+"</td>" +
+                    "</tr>");
+                }
+                if(data.length==1){
+                    $('#select-table tbody').append("<tr><td colspan='2' class='text-center' style='color: red;'>没有符合条件的数据，请换个条件试试</td></tr>");
+                }
+                //生成分页导航
+                $('#sel-page-nav li').remove();
+                for(var i=0;i<data[data.length-1].pageSum;i++){
+                    $('#sel-page-nav').append("<li><a href='#' onclick='queryByPage("+(i+1)+")'>"+(i+1)+"</a></li>");
+                }
+            },
+            error: function (data) {
+                console.log(data);
+                alert("getToolsList ajax error");
+            }
+        });
+        // 为了防止普通浏览器进行表单提交和产生页面导航（防止页面刷新？）返回false
+        return false;
+    });
+    $('#queryFrom-select').submit();
+
+    function queryByPage(num){
+        pageNum=num;
+        $('#queryFrom-select').submit();
+    }
+
+    var toolId='';
+    var toolName='';
+    function selTool(id,name){
+        toolId=id;
+        toolName=name;
+        $("#msg").html("选择了-----"+name).css('color','red');
+    }
+    function sure(){
+        sessionStorage.selToolId=toolId;
+        sessionStorage.selToolName=toolName;
+        $('.modal-body').load('../view/tool-flow-edit.html');
+    }
+
+</script>

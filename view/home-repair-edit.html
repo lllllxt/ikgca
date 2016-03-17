@@ -1,0 +1,73 @@
+<div class="edit">
+    <form class="form-horizontal" id="hrForm" action="" method="post">
+        <div class="form-group hide">
+            <label class="col-sm-3 control-label">id</label>
+            <div class="col-sm-9 ">
+                <input type="text" name="id" class="form-control" placeholder="id">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">维修内容：</label>
+            <div class="col-sm-9 ">
+                <input type="text" name="content" class="form-control" placeholder="维修内容">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">宿舍地址：</label>
+            <div class="col-sm-9">
+                <input type="text" name="address" class="form-control" placeholder="宿舍地址">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">联系电话：</label>
+            <div class="col-sm-9 ">
+                <input type="tel" name="phone" class="form-control" placeholder="手机" maxlength="11" onkeyup="this.value=this.value.replace(/\D/g,'')">
+            </div>
+        </div>
+        <div class="form-group hide">
+            <label class="col-sm-3 control-label">接单人id</label>
+            <div class="col-sm-9 ">
+                <input type="text" name="userId" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">接单人：</label>
+            <div class="col-sm-9 ">
+                <!--<input type="text" name="userName" class="form-control" placeholder="接单人">-->
+                <input type="text" name="userName" class="form-control" placeholder="接单人" onclick="selectUser()" data-toggle='modal' data-target='#selector'>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">完成情况：</label>
+            <div class="col-sm-9 ">
+                <label class="radio-inline">
+                    <input type="radio" name="state"  value="0" checked> 未完成
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="state" value="1"> 已完成
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">备注：</label>
+            <div class="col-sm-9">
+                <textarea class="form-control" name="remark" placeholder="备注"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label sr-only">错误</label>
+            <div class="col-sm-9 ">
+                <div name="error" class="alert alert-danger hidden" role="alert">...</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-9  text-right">
+                <button type="button" class="btn btn-default"  onclick="javascript:sessionStorage.clear();" data-dismiss="modal">关闭 </button>
+                <button type="submit" class="btn btn-primary">确定</button>
+            </div>
+        </div>
+    </form>
+</div>
+<!--js-->
+<script src="../js/home-repair-edit.js"></script>

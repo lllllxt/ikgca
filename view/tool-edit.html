@@ -1,0 +1,48 @@
+<div class="edit">
+    <form class="form-horizontal" id="toolForm" action="" method="post">
+        <div class="form-group hide">
+            <label class="col-sm-3 control-label">id</label>
+            <div class="col-sm-9 ">
+                <input type="text" name="id" class="form-control" placeholder="id">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">名称：</label>
+            <div class="col-sm-9 ">
+                <input type="text" name="name" class="form-control" placeholder="名称">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">状态：</label>
+            <div class="col-sm-9 ">
+                <label class="radio-inline">
+                    <input type="radio" name="state" value="0" checked> 空闲
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="state" value="1"> 已出借
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">备注：</label>
+            <div class="col-sm-9">
+                <textarea class="form-control" name="remark" placeholder="备注"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label sr-only">错误</label>
+            <div class="col-sm-9 ">
+                <div name="error" class="alert alert-danger hidden" role="alert">...</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-9  text-right">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭 </button>
+                <button type="submit" class="btn btn-primary">确定</button>
+            </div>
+        </div>
+    </form>
+</div>
+<!--js-->
+<script src="../js/tool-edit.js"></script>

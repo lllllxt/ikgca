@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!--//收藏用logo图标-->
+    <link rel="bookmark"  type="image/x-icon"  href="../images/logo.gif"/>
+    <!--//网站显示页logo图标-->
+    <link rel="shortcut icon" href="../images/logo.gif">
+
+    <title>登录页</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../css/login.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="signin" >
+    <form class="form-signin" id="login-form">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <label for="phone" class="sr-only">Phone</label>
+        <input type="tel" id="phone" name="phone" class="form-control" placeholder="账号" autofocus maxlength="11" onkeyup="this.value=this.value.replace(/\D/g,'')">
+        <label for="password" class="sr-only">Password</label>
+        <!--<input type="password" id="password" name="password" class="form-control" placeholder="Password" required>-->
+        <input type="password" id="password" name="password" class="form-control" placeholder="密码">
+        <div id="error" class="hidden text-danger"></div>
+
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" id="checkbox_rm" value="remember-me"> Remember me
+            </label>
+        </div>
+        <button class="btn btn-lg btn-info btn-block" type="submit">Sign in</button>
+    </form>
+</div>
+
+<script src="../js/jquery.min.js"></script>
+<script src="../js/jquery.form.js"></script>
+<script src="../js/login.js"></script>
+
+</body>
+</html>
