@@ -26,7 +26,7 @@ function getActivityById() {
             $("[name='leaderName']").val(data[0].leaderName);
             $("[name='acAddress']").val(data[0].acAddress);
             $("[name='fee']").val(data[0].fee);
-            $("[name='signInList']").val(data[0].signInList);
+            //$("[name='signInList']").val(data[0].signInList);
             if(data[0].acState==0){
                 $(":radio[value='0']").attr("checked", true);
             }else if(data[0].acState==1){
@@ -57,6 +57,7 @@ if (sessionStorage.action == 'update') {
     url = '../service/ActivityAction.php?act=update&';
 }
 else if (sessionStorage.action == 'add') {
+    $(".userName").addClass("hidden");
     if(sessionStorage.selUserId){
         $("[name='leaderId']").val(sessionStorage.selUserId);
         $("[name='leaderName']").val(sessionStorage.selUserName);

@@ -40,6 +40,7 @@ $('#queryFrom').submit(function () {
                 "<td>"+data[i].title+"</td>" +
                 "<td>"+data[i].content+"</td>" +
                 "<td>"+data[i].createDate+"</td>" +
+                "<td>"+data[i].startDate+"</td>" +
                 "<td>"+data[i].userName+"</td>" +
                 "<td class='text-center'>"+data[i].acState+"</td>" +
                 "<td>" +
@@ -49,7 +50,7 @@ $('#queryFrom').submit(function () {
                 "</tr>");
             }
             if(data.length==1){
-                $('tbody').append("<tr><td colspan='5' class='text-center' style='color: red;'>没有符合条件的数据，请换个条件试试</td></tr>");
+                $('tbody').append("<tr><td colspan='6' class='text-center' style='color: red;'>没有符合条件的数据，请换个条件试试</td></tr>");
             }
             //生成分页导航
             $('#page-nav li').remove();

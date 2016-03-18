@@ -20,7 +20,7 @@ if ($_GET['act'] == 'query') {
     $stmt->execute();
     $hrList = array();
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        // 查询出借人姓名
+        // 查询姓名
         $user_sql="SELECT name FROM user WHERE id =".$row['userId'];
         $user_stmt = $pdo->prepare($user_sql);
         $user_stmt->execute();
@@ -75,7 +75,7 @@ elseif($_GET['act'] == 'queryAll'){
     $stmt->execute();
     $result = array();
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        // 查询出借人姓名
+        // 查询姓名
         $user_sql="SELECT name FROM user WHERE id =".$row['userId'];
         $user_stmt = $pdo->prepare($user_sql);
         $user_stmt->execute();
@@ -139,4 +139,44 @@ elseif ($_GET['act'] == 'update') {
     } else {
         echo "1001";//失败
     }
+}
+
+//排行榜
+elseif($_GET['act'] == 'paihang'){
+    $dateNow=date('Y-m',time());
+    $sql="SELECT userId  FROM home_repair WHERE createDate LIKE '%$dateNow%'";
+    $stmt = $pdo->prepare($sql);
+    $stmt ->execute();
+    $result=array();
+    while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        // 查询姓名
+        $user_sql="SELECT name FROM user WHERE id =".$row['userId'];
+        $user_stmt = $pdo->prepare($user_sql);
+        $user_stmt->execute();
+        while ($user = $user_stmt->fetch(PDO::FETCH_ASSOC)) {
+            $row['userName'] = $user['name'];
+        }
+        $isExist=false;
+        for($i=0;$i<count($result);$i++){
+            if($result[$i]["userId"]==$row['userId']){
+                $result[$i]["count"]++;
+                $isExist=true;
+            }
+        }
+        if(!$isExist){
+            $row["count"]=1;
+            array_push($result,$row);
+        }
+    }
+    //排序
+    for($i=0;$i<count($result);$i++){
+        for($j=$i+1;$j<count($result)-$i-1;$j++){
+            if($result[$i]['count'] < $result[$j]['count']){
+                $t=$result[$i];
+                $result[$i]=$result[$j];
+                $result[$j]=$t;
+            }
+        }
+    }
+    echo json_encode($result);
 }

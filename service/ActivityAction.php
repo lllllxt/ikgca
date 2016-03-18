@@ -76,7 +76,7 @@ elseif($_GET['act'] == 'queryAll'){
     $pageSize = $_POST['pageSize'];
     $pageSum = ceil($count/$pageSize);
     $start =($pageNum-1)*$pageSize;
-    $sql.=" ORDER BY createDate ASC LIMIT $start,$pageSize";
+    $sql.=" ORDER BY createDate desc LIMIT $start,$pageSize";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $result = array();
@@ -105,13 +105,15 @@ elseif ($_GET['act'] == 'add') {
     $leaderId = $_POST['leaderId'];
     $acAddress = $_POST['acAddress'];
     $fee = $_POST['fee'];
-    $signInList = $_POST['signInList'];
+//    $signInList = $_POST['signInList'];
     $acState = $_POST['acState'];
 
-    $sql = "INSERT INTO activity(title, content, createDate, userId,startDate,endDate,deadline,leaderId,acAddress,fee,signInList,acState) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+//    $sql = "INSERT INTO activity(title, content, createDate, userId,startDate,endDate,deadline,leaderId,acAddress,fee,signInList,acState) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+    $sql = "INSERT INTO activity(title, content, createDate, userId,startDate,endDate,deadline,leaderId,acAddress,fee,acState) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
     $stmt = $pdo->prepare($sql);
 
-    $stmt->execute(array($title, $content, $createDate, $userId,$startDate, $endDate, $deadline, $leaderId, $acAddress, $fee, $signInList, $acState));
+//    $stmt->execute(array($title, $content, $createDate, $userId,$startDate, $endDate, $deadline, $leaderId, $acAddress, $fee, $signInList, $acState));
+    $stmt->execute(array($title, $content, $createDate, $userId,$startDate, $endDate, $deadline, $leaderId, $acAddress, $fee,$acState));
     if ($stmt->rowCount() > 0) {
         echo '1000';//成功
     } else {
@@ -141,17 +143,33 @@ elseif ($_GET['act'] == 'update') {
     $leaderId = $_POST['leaderId'];
     $acAddress = $_POST['acAddress'];
     $fee = $_POST['fee'];
-    $signInList = $_POST['signInList'];
+//    $signInList = $_POST['signInList'];
     $acState = $_POST['acState'];
     $id = $_POST['id'];
 
-    $sql = "UPDATE activity SET title=?,content=?,startDate=?,endDate=?,deadline=?,leaderId=?,acAddress=?,fee=?,signInList=?,acState=? WHERE id=?";
+//    $sql = "UPDATE activity SET title=?,content=?,startDate=?,endDate=?,deadline=?,leaderId=?,acAddress=?,fee=?,signInList=?,acState=? WHERE id=?";
+    $sql = "UPDATE activity SET title=?,content=?,startDate=?,endDate=?,deadline=?,leaderId=?,acAddress=?,fee=?,acState=? WHERE id=?";
     $stmt = $pdo->prepare($sql);
 
-    $stmt->execute(array($title, $content, $startDate, $endDate, $deadline, $leaderId, $acAddress, $fee, $signInList, $acState, $id));
+//    $stmt->execute(array($title, $content, $startDate, $endDate, $deadline, $leaderId, $acAddress, $fee, $signInList, $acState, $id));
+    $stmt->execute(array($title, $content, $startDate, $endDate, $deadline, $leaderId, $acAddress, $fee, $acState, $id));
     if ($stmt->rowCount() > 0) {
         echo '1000';//成功
     } else {
         echo "1001";//失败
     }
+}
+
+//本月活動概要
+elseif ($_GET['act'] == 'huodong'){
+    $dateNow=date('Y-m-d',time());
+    $sql="SELECT * FROM activity WHERE startDate >= '$dateNow' ";
+    $stmt = $pdo->prepare($sql);
+    $stmt ->execute();
+    $result = array();
+    while($row = $stmt ->fetch(PDO::FETCH_ASSOC)){
+        array_push($result,$row);
+    }
+    echo $sql;
+    echo json_encode($result);
 }
