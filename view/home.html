@@ -1,112 +1,124 @@
 <style>
-    .weather {
-        position: fixed;
-        bottom: 60px;
-        left: -850px;
-        z-index: 10086;
-        transition: left 1s;
+    /*shangmen*/
+    tr td:first-child .mingci{
+        border: 1px solid #adadad;
+        background-color: #bbbbbb;
+        color: #ffffff;
+        padding: 0 4px;
+    }
+    tr.no1 td:first-child .mingci,tr.no2 td:first-child .mingci,tr.no3 td:first-child .mingci{
+        padding: 0 4px;
+        background-color: #f3456d;
+        border: 1px solid #f26378;
+
+    }
+
+    /*huodong*/
+    .panel-body {
+        display: none;
+    }
+
+    #panel-body0 {
+        display: block;
     }
 </style>
-<div class="weather">
-    <iframe allowtransparency="true" frameborder="0" width="875" height="98" scrolling="no"
-            style="background-color: #101010;"
-            src="http://tianqi.2345.com/plugin/widget/index.htm?s=2&z=2&t=1&v=0&d=5&bd=0&k=000000&f=ffffff&q=1&e=1&a=1&c=71256&w=875&h=98&align=center"></iframe>
-    <script>
-        $(".weather").mouseover(function () {
-            $(".weather").css("left", 0);
-        }).mouseout(function () {
-            $(".weather").css("left", "-850px");
-        });
-    </script>
-</div>
-<div class="shangmen">
-    <h2>本月上门排行榜</h2>
-    <table class="table">
-        <thead>
-        <tr>
-            <th style=''>名次</th>
-            <th style=''>姓名</th>
-            <th style=''>次数</th>
-        </tr>
-        </thead>
-        <tbody> </tbody>
-    </table>
-    <script>
-        function getPaiHang() {
-            $.ajax({
-                type: "get",
-                url: "../service/HomeRepairAction.php?act=paihang",
-                dataType: "json",
-                data: {},
-                success: function (data) {
-                    console.log(data);
-                    $(".shangmen tbody tr").remove();
-                    for(var i=0;i<data.length;i++){
-                        $(".shangmen tbody").append("<tr>" +
-                        "<td>"+(i+1)+"</td>" +
-                        "<td>"+data[i].userName+"</td>" +
-                        "<td>"+data[i].count+"</td>" +
-                        "</tr>");
-                    }
+<div class="container">
+    <div class="row">
+        <div class="shangmen col-md-4">
+            <h2>本月上门排行榜</h2>
+           <div class="well well-sm">
+               <table class="table table-hover">
+                   <thead>
+                       <tr>
+                           <th style=''>名次</th>
+                           <th style=''>姓名</th>
+                           <th style=''>次数</th>
+                       </tr>
+                   </thead>
+                   <tbody>
+                        <tr><td colspan='3'>只有愚蠢的人才看不见排名 ha~</td></tr>
+                   </tbody>
+               </table>
+           </div>
+            <script>
+                function getPaiHang() {
+                    $.ajax({
+                        type: "get",
+                        url: "../service/HomeRepairAction.php?act=paihang",
+                        dataType: "json",
+                        data: {},
+                        success: function (data) {
+                            console.log(data);
+                            $(".shangmen tbody tr").remove();
+                            for (var i = 0; i < data.length; i++) {
+                                $(".shangmen tbody").append("<tr class='no"+(i+1)+"'>" +
+                                "<td><span class='mingci'>" + (i + 1) + "</span></td>" +
+                                "<td>" + data[i].userName + "</td>" +
+                                "<td>" + data[i].count + "</td>" +
+                                "</tr>");
+                            }
 
-                },
-                error: function (data) {
-                    console.log(data);
-                    $(".shangmen tbody").append("<tr><td class='text-center text-danger' colspan='3'>服务器开小差了 :)</td></tr>");
+                        },
+                        error: function (data) {
+                            console.log(data);
+                            $(".shangmen tbody").append("<tr><td class='text-center text-danger' colspan='3'>服务器开小差了 :)</td></tr>");
+                        }
+                    });
                 }
-            });
-        }
-        getPaiHang();
-    </script>
-</div>
-<div class="huodong">
-    <h2>未来活动概要</h2>
-    标题
-    负责人：张三
-    日期：2016-03-11
-    内容：blabla..
+                getPaiHang();
+            </script>
+        </div>
+        <div class="huodong col-md-8">
+            <h2>未来活动概要</h2>
 
-    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-        <div class="panel panel-default">
-            <div class="panel-heading" role="tab" id="headingOne">
-                <h4 class="panel-title">
-                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        Collapsible Group Item #1
-                    </a>
-                </h4>
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <span>暂时没有说动哟</span>
+                        </h4>
+                    </div>
+                    <div class="panel-body" id="panel-body0">
+                        <p style="text-indent: 2em;">赶紧搞点活动吧！</p>
+                        <p class="pull-right"></p>
+                        </div>
+                    </div>
             </div>
-            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                <div class="panel-body">
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                </div>
-            </div>
+            <script>
+                $.ajax({
+                    type: "get",
+                    url: "../service/ActivityAction.php?act=huodong",
+                    dataType: "json",
+                    success: function (data) {
+                        console.log(data);
+                        $(".huodong .panel-group .panel").remove();
+                        for (var i = 0; i < data.length; i++) {
+                            $(".huodong .panel-group").append("<div class='panel panel-default'>" +
+                            "<div class='panel-heading' onclick='show(" + i + ");'>" +
+                            "<h4 class='panel-title'>" +
+                            "<span>" + data[i].title + "</span> <small class='pull-right'>" + data[i].startDate + "</small>" +
+                            "</h4>" +
+                            "</div>" +
+                            "<div class='panel-body' id='panel-body" + i + "'>" +
+                            "<p style='text-indent: 2em;'>" + data[i].content + "</p>" +
+                            "<p class='pull-right'>" + data[i].leaderName + "</p>" +
+                            "</div>" +
+                            "</div>");
+                        }
+                    },
+                    error: function (data) {
+                        console.log(data);
+                        $(".huodong .panel-group").append("<div>服务器开小差了 :)</div>");
+
+                    }
+                });
+
+                function show(i) {
+                    $(".panel-body").css("display", "none");
+                    $("#panel-body" + i).css("display", "block");
+                }
+            </script>
         </div>
-        <div class="panel panel-default">
-            <div class="panel-heading" role="tab" >
-                <h4 class="panel-title">
-                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        Collapsible Group Item #2
-                    </a>
-                </h4>
-            </div>
-            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                <div class="panel-body">
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                </div>
-            </div>
-        </div>
+
     </div>
-    <script>
-        $.ajax({
-            type:"get",
-            url:"../service/ActivityAction.php?act=huodong",
-            dataType:"json",
-            success:function(data){
-                console.log(data);
-            },
-            error:function(data){
-                console.log(data);
-            }
-        });
-    </script>
 </div>

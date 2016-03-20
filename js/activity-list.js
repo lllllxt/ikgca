@@ -41,7 +41,7 @@ $('#queryFrom').submit(function () {
                 "<td>"+data[i].content+"</td>" +
                 "<td>"+data[i].createDate+"</td>" +
                 "<td>"+data[i].startDate+"</td>" +
-                "<td>"+data[i].userName+"</td>" +
+                "<td>"+data[i].leaderName+"</td>" +
                 "<td class='text-center'>"+data[i].acState+"</td>" +
                 "<td>" +
                 "<a href='#' onclick='deleteById("+data[i].id+")'><span class='glyphicon glyphicon-remove'></span>删除</a>  " +

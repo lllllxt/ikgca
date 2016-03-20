@@ -81,12 +81,19 @@ elseif($_GET['act'] == 'queryAll'){
     $stmt->execute();
     $result = array();
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        // 查询发布人姓名
-        $user_sql="SELECT name FROM user WHERE id =".$row['userId'];
-        $user_stmt = $pdo->prepare($user_sql);
-        $user_stmt->execute();
-        while ($user = $user_stmt->fetch(PDO::FETCH_ASSOC)) {
-            $row['userName'] = $user['name'];
+//        // 查询发布人姓名
+//        $user_sql="SELECT name FROM user WHERE id =".$row['userId'];
+//        $user_stmt = $pdo->prepare($user_sql);
+//        $user_stmt->execute();
+//        while ($user = $user_stmt->fetch(PDO::FETCH_ASSOC)) {
+//            $row['userName'] = $user['name'];
+//        }
+        // 查询负责人姓名
+        $leader_sql="SELECT name FROM user WHERE id =".$row['leaderId'];
+        $leader_stmt = $pdo->prepare($leader_sql);
+        $leader_stmt->execute();
+        while ($leader = $leader_stmt->fetch(PDO::FETCH_ASSOC)) {
+            $row['leaderName'] = $leader['name'];
         }
         array_push($result, $row);
     }
@@ -163,13 +170,19 @@ elseif ($_GET['act'] == 'update') {
 //本月活動概要
 elseif ($_GET['act'] == 'huodong'){
     $dateNow=date('Y-m-d',time());
-    $sql="SELECT * FROM activity WHERE startDate >= '$dateNow' ";
+    $sql="SELECT * FROM activity WHERE startDate >= '$dateNow' ORDER BY startDate ASC ";
     $stmt = $pdo->prepare($sql);
     $stmt ->execute();
     $result = array();
     while($row = $stmt ->fetch(PDO::FETCH_ASSOC)){
+        // 查询负责人姓名
+        $leader_sql="SELECT name FROM user WHERE id =".$row['leaderId'];
+        $leader_stmt = $pdo->prepare($leader_sql);
+        $leader_stmt->execute();
+        while ($leader = $leader_stmt->fetch(PDO::FETCH_ASSOC)) {
+            $row['leaderName'] = $leader['name'];
+        }
         array_push($result,$row);
     }
-    echo $sql;
     echo json_encode($result);
 }
