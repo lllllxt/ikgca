@@ -226,3 +226,7 @@ elseif($_GET['act']=='removeUserImg'){
         }
     }
 }
+//注册前，查询手机号码是否已被占用
+elseif($_GET['act']=='checkPhone'){
+
+}

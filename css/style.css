@@ -54,6 +54,9 @@ html,body{
     background: #585858;
     color: aliceblue;
 }
+.text-red{
+    color: red;
+}
 /*table*/
 .table-hover tbody tr:hover{
 background: #D4D4D4;
