@@ -228,5 +228,24 @@ elseif($_GET['act']=='removeUserImg'){
 }
 //注册前，查询手机号码是否已被占用
 elseif($_GET['act']=='checkPhone'){
+    if(!empty($_GET['phone'])){
+
+        $sql = "SELECT phone FROM user";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            if($row['phone']==$_GET['phone']){
+                echo '该手机号已被占用';
+            }
+        }
+        //手机号码长度不对
+        if(strlen($_GET['phone'])<11){
+            echo '手机号码长度不对';
+        }
+        //手机号码不正确
+        elseif(!preg_match("/^1[34578]{1}\d{9}$/",$_GET['phone'])){
+            echo "请输入正确手机号";
+        }
+    }
 
 }

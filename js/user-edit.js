@@ -7,6 +7,7 @@ var user = {};
 //获取id
 var id = sessionStorage.id;
 var url = '';//初始化请求url
+
 //通过id查询
 function getUserById() {
     $.ajax({
@@ -169,3 +170,20 @@ function deleteImg(){
         })
     }
 }
+/*--------------------------------------头像上传End-----------------------*/
+
+$("[name='phone']").blur(function(){
+    $.ajax({
+        type: "GET",
+        url: '../service/UserAction.php?act=checkPhone&',
+        data: {
+            'phone': $("[name='phone']").val()
+        },
+        success: function (data) {
+            if(data!=null && data != ""){
+                $("[name='error']").removeClass("hidden");
+                $("[name='error']").html(data);
+            }
+        }
+    });
+});
