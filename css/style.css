@@ -16,7 +16,7 @@ html,body{
 }
 #body{
     margin: 20px auto;
-    padding-top: 50px;/*narbar高度 默认narbar的高度50px*/
+    padding-top: 55px;/*narbar高度 默认narbar的高度50px*/
     padding-bottom: 100px;/*等于footer的高度*/
 }
 #footer{
