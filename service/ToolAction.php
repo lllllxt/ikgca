@@ -330,46 +330,36 @@ elseif ($_GET['act'] == 'updateFlow') {
     }
 }
 
-/*-------------------------------function--------------------------------------*/
-/**
- * 从$A_arr关联数组中获取与$B_obj对象某相同字段值相同的所有数据
- * @param $A_arr array 关联数组
- * @param $B_obj object 对象
- * @param $key string 字段名
- * @return array
- */
-function getDataFromA($A_arr,$B_obj,$key){
-    $result = array();
-    foreach($A_arr as $res)
-    {
-        if($res[$key]==$B_obj[$key]){
-            array_push($result, $res);
-        }
-    }
-    return $result;
-}
-/**
- * 根据归还状态从$A_arr获取数据
- * @param $A_arr array 关联数组
- * @param $B_obj object 对象
- * @return array
- */
-function getDataByState($A_arr,$B_obj){
-    $result = array();
-    if($B_obj['state']==1){//未归还
-        foreach($A_arr as $res)
-        {
-            if( $res['returnDate'] == null || $res['returnDate'] == "0000-00-00"){
-                array_push($result, $res);
+
+
+
+
+//工具情况
+elseif($_GET['act']=="gongju") {
+    $sql="SELECT name,state FROM tool";
+    $stmt=$pdo->prepare($sql);
+    $stmt->execute();
+    $toolList=array();
+    while( $row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        $isExist=false;
+        for($i=0;$i<count($toolList);$i++){
+            if($toolList[$i]==1){
+                $toolList[$i]++;
+            }
+            if($toolList[$i]["name"]==$row['name']){
+                $toolList[$i]["count"]++;
+                $isExist=true;
             }
         }
-    }else{//已归还
-        foreach($A_arr as $res)
-        {
-            if( $res['returnDate'] != null && $res['returnDate'] != "0000-00-00"){
-                array_push($result, $res);
+        if(!$isExist){
+            if(  $row["state"]==1){
+                $row["lendCount"]=1;
+            }else{
+                $row["lendCount"]=0;
             }
+            $row["count"]=1;
+            array_push($toolList,$row);
         }
     }
-    return $result;
+    echo json_encode($toolList);
 }

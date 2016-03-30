@@ -1,4 +1,15 @@
 <style>
+    @font-face {
+        font-family: "xiyuan";
+        src: url("../fonts/xiyuan.ttf");
+        src: local("☺"), url("../fonts/xiyuan.ttf") format("truetype");
+        font-weight: normal;
+        font-style: normal;
+    }
+    h2{
+        font-family: "xiyuan";
+        font-weight: bold;
+    }
     /*shangmen*/
     tr td:first-child .mingci{
         border: 1px solid #adadad;
@@ -24,49 +35,97 @@
 </style>
 <div class="container">
     <div class="row">
-        <div class="shangmen col-md-4">
-            <h2>本月上门排行榜</h2>
-           <div class="well well-sm">
-               <table class="table table-hover">
-                   <thead>
-                       <tr>
-                           <th style=''>名次</th>
-                           <th style=''>姓名</th>
-                           <th style=''>次数</th>
-                       </tr>
-                   </thead>
-                   <tbody>
+        <div class="col-md-4">
+            <div class="shangmen">
+                <h2>本月上门排行榜</h2>
+                <div class="well well-sm">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th style=''>名次</th>
+                            <th style=''>姓名</th>
+                            <th style=''>次数</th>
+                        </tr>
+                        </thead>
+                        <tbody>
                         <tr><td colspan='3'>只有愚蠢的人才看不见排名 ha~</td></tr>
-                   </tbody>
-               </table>
-           </div>
-            <script>
-                function getPaiHang() {
-                    $.ajax({
-                        type: "get",
-                        url: "../service/HomeRepairAction.php?act=paihang",
-                        dataType: "json",
-                        data: {},
-                        success: function (data) {
-                            console.log(data);
-                            $(".shangmen tbody tr").remove();
-                            for (var i = 0; i < data.length; i++) {
-                                $(".shangmen tbody").append("<tr class='no"+(i+1)+"'>" +
-                                "<td><span class='mingci'>" + (i + 1) + "</span></td>" +
-                                "<td>" + data[i].userName + "</td>" +
-                                "<td>" + data[i].count + "</td>" +
-                                "</tr>");
-                            }
+                        </tbody>
+                    </table>
+                </div>
+                <script>
+                    openDL();
+                    function getPaiHang() {
+                        $.ajax({
+                            type: "get",
+                            url: "../service/HomeRepairAction.php?act=paihang",
+                            dataType: "json",
+                            data: {},
+                            success: function (data) {
+                                console.log(data);
+                                $(".shangmen tbody tr").remove();
+                                for (var i = 0; i < data.length; i++) {
+                                    $(".shangmen tbody").append("<tr class='no"+(i+1)+"'>" +
+                                    "<td><span class='mingci'>" + (i + 1) + "</span></td>" +
+                                    "<td>" + data[i].userName + "</td>" +
+                                    "<td>" + data[i].count + "</td>" +
+                                    "</tr>");
+                                }
 
-                        },
-                        error: function (data) {
-                            console.log(data);
-                            $(".shangmen tbody").append("<tr><td class='text-center text-danger' colspan='3'>服务器开小差了 :)</td></tr>");
+                            },
+                            error: function (data) {
+                                console.log(data);
+                                $(".shangmen tbody").append("<tr><td class='text-center text-danger' colspan='3'>服务器开小差了 :)</td></tr>");
+                            }
+                        });
+                    }
+                    getPaiHang();
+                </script>
+            </div>
+            <div class="gongju">
+                <h2>维修站内工具情况</h2>
+                <div class="well well-sm">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th style=''>工具名</th>
+                            <th style=''>总数量</th>
+                            <th style=''>借出量</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr><td colspan='3'>只有愚蠢的人才看不见 ha~</td></tr>
+                        </tbody>
+                    </table>
+                    <script>
+                        openDL();
+                        function getPaiHang() {
+                            $.ajax({
+                                type: "get",
+                                url: "../service/ToolAction.php?act=gongju",
+                                dataType: "json",
+                                data: {},
+                                success: function (data) {
+                                    console.log(data);
+                                    $(".gongju tbody tr").remove();
+                                    for (var i = 0; i < data.length; i++) {
+                                        $(".gongju tbody").append("<tr>" +
+                                        "<td>"+data[i].name+"</td>" +
+                                        "<td>" + data[i].count + "</td>" +
+                                        "<td>" + data[i].lendCount + "</td>" +
+                                        "</tr>");
+                                    }
+
+                                },
+                                error: function (data) {
+                                    console.log(data);
+                                    $(".gongju tbody").append("<tr><td class='text-center text-danger' colspan='3'>服务器开小差了 :)</td></tr>");
+                                }
+                            });
                         }
-                    });
-                }
-                getPaiHang();
-            </script>
+                        getPaiHang();
+                    </script>
+                </div>
+            </div>
         </div>
         <div class="huodong col-md-8">
             <h2>未来活动概要</h2>
@@ -124,4 +183,5 @@
 </div>
 <script>
     closeLoading();
+    closeDL();
 </script>

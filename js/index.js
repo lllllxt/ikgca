@@ -67,3 +67,9 @@ function openLoading() {
 function closeLoading() {
     $('#loading').addClass("hidden");
 }
+function openDL() {
+    $('#loading-data').removeClass("hidden");
+}
+function closeDL() {
+    $('#loading-data').addClass("hidden");
+}
