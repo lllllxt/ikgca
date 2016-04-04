@@ -8,12 +8,9 @@ echo "无敌加密后".md5(crypt($a2,"123"))."<br>"; // 现在让黑客如何破
 echo "加密后".md5($a)."<br>"; // 现在让黑客如何破这个密码？？？
 echo "加密后".md5($a2)."<br>"; // 现在让黑客如何破这个密码？？？
 
-if(a()){
-    echo "123";
-}
-
-function a(){
-    echo "asd";
-    return false;
-}
+$str = '陶喆';
+echo 'gb2312-'.$str;
+echo '<br />';
+$str = iconv( 'utf-8' ,'utf-8' , $str );
+echo 'utf8-'.$str;
 ?>

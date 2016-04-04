@@ -27,6 +27,7 @@ $('#queryFrom').submit(function () {
             $('tbody tr').remove();
             for (var i = 0; i < data.length-1; i++) {
                 $('tbody').append("<tr>" +
+                "<td><label><input type='checkbox' id='"+data[i].id+"'></label></td>" +
                 "<td>"+data[i].name+"</td>" +
                 "<td>"+data[i].sex+"</td>" +
                 "<td>"+data[i].phone+"</td>" +
@@ -99,4 +100,21 @@ function queryUserById(id){
     sessionStorage.action = 'query';
     sessionStorage.id = id;
     $('.modal-body').load('user-edit.html');
+}
+//下载
+function download(){
+    user.name = $('#name').val();
+    user.sex = $('#sex').val();
+    user.phone = $('#phone').val();
+    $.ajax({
+        type:"post",
+        url:"../service/UserAction.php?act=queryAll&",
+        data: {
+            'user': user,
+            'excel':"download"
+        },
+        success:function(data){
+            console.log(data);
+        }
+    })
 }
