@@ -135,9 +135,9 @@ elseif ($_GET['act'] == 'del') {
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     if ($stmt->rowCount() > 0) {
-        echo '1000';//成功
+        echo '删除成功';
     } else {
-        echo "1001";//失败
+        echo "删除失败";
     }
 }
 //更新信息
@@ -150,15 +150,12 @@ elseif ($_GET['act'] == 'update') {
     $leaderId = $_POST['leaderId'];
     $acAddress = $_POST['acAddress'];
     $fee = $_POST['fee'];
-//    $signInList = $_POST['signInList'];
     $acState = $_POST['acState'];
     $id = $_POST['id'];
 
-//    $sql = "UPDATE activity SET title=?,content=?,startDate=?,endDate=?,deadline=?,leaderId=?,acAddress=?,fee=?,signInList=?,acState=? WHERE id=?";
     $sql = "UPDATE activity SET title=?,content=?,startDate=?,endDate=?,deadline=?,leaderId=?,acAddress=?,fee=?,acState=? WHERE id=?";
     $stmt = $pdo->prepare($sql);
 
-//    $stmt->execute(array($title, $content, $startDate, $endDate, $deadline, $leaderId, $acAddress, $fee, $signInList, $acState, $id));
     $stmt->execute(array($title, $content, $startDate, $endDate, $deadline, $leaderId, $acAddress, $fee, $acState, $id));
     if ($stmt->rowCount() > 0) {
         echo '1000';//成功

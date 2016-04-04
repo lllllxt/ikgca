@@ -8,7 +8,7 @@ $('#login-form').submit(function () {
     // 提交表单
     $(this).ajaxSubmit({
         url: "../service/UserAction.php?act=login&",
-        type: 'GET',
+        type: 'POST',
         dataType:'json',
         beforeSubmit: showRequest,  //提交前处理
         success: function(data) {
@@ -18,6 +18,7 @@ $('#login-form').submit(function () {
             }
             sessionStorage.loginName=data.name;
             sessionStorage.loginId=data.id;
+            sessionStorage.power=data.power;
             window.location="../view/index.html";
         },  //处理完成
         error:function(data){

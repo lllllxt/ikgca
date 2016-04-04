@@ -35,7 +35,7 @@ function getHRById() {
             }
         },
         error: function () {
-            alert("getHRById ajax error");
+            alert("帮我找程序员欧巴修修我！");
         }
     });
 }
@@ -64,7 +64,7 @@ $('#hrForm').submit(function () {
     if(confirm("确定提交吗？")){
         // 提交表单
         $(this).ajaxSubmit(options);
-        sessionStorage.clear();
+        sessionStorage.removeItem("selUserId");
     }
     // 为了防止普通浏览器进行表单提交和产生页面导航（防止页面刷新？）返回false
     return false;
@@ -75,19 +75,19 @@ function showRequest(formData, jqForm, options) {
     //console.log(formData);
 
     if ($("[name='content']").val() == "") {
-        $("[name='error']").removeClass('hidden');
-        $("[name='error']").html("维修内容不能为空");
+        $("#error").removeClass('hidden');
+        $("#error").html("维修内容不能为空");
         $("[name='content']").focus();
         return false;
     }
     else if ($("[name='phone']").val() == "") {
-        $("[name='error']").removeClass('hidden');
-        $("[name='error']").html("联系电话不能为空");
+        $("#error").removeClass('hidden');
+        $("#error").html("联系电话不能为空");
         $("[name='phone']").focus();
         return false;
     }
     else {
-        $("[name='error']").addClass('hidden');
+        $("#error").addClass('hidden');
         return true;
     }
     return true;
@@ -106,5 +106,7 @@ function showResponse(responseText, statusText) {
 
 function selectUser(){
     sessionStorage.historyUrl='../view/home-repair-edit.html';
+    sessionStorage.selPow=2;
+
     $('.modal-body').load("../view/select/selectUser.html");
 }

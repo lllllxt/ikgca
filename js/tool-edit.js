@@ -26,8 +26,9 @@ function getToolById() {
                 $(":radio[value='1']").attr("checked", true);
             }
         },
-        error: function () {
-            alert("getToolById ajax error");
+        error: function (data) {
+            console.log(data);
+            alert("帮我找程序员欧巴修修我！");
         }
     });
 }
@@ -61,13 +62,13 @@ function showRequest(formData, jqForm, options) {
     //console.log(formData);
 
     if ($("[name='name']").val() == "") {
-        $("[name='error']").removeClass('hidden');
-        $("[name='error']").html("工具名称不能为空");
+        $("#error").removeClass('hidden');
+        $("#error").html("工具名称不能为空");
         $("[name='name']").focus();
         return false;
     }
     else {
-        $("[name='error']").addClass('hidden');
+        $("#error").addClass('hidden');
         return true;
     }
     return true;

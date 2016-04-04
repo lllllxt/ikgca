@@ -45,7 +45,7 @@ function getActivityById() {
             }
         },
         error: function () {
-            alert("getActivityById ajax error");
+            alert("帮我找程序员欧巴修修我！");
         }
     });
 }
@@ -80,7 +80,7 @@ $('#activityForm').submit(function () {
     if(confirm("确定提交吗？")){
         // 提交表单
         $(this).ajaxSubmit(options);
-        sessionStorage.clear();
+        sessionStorage.removeItem("selUserId");
     }
     // 为了防止普通浏览器进行表单提交和产生页面导航（防止页面刷新？）返回false
     return false;
@@ -91,19 +91,31 @@ function showRequest(formData, jqForm, options) {
     //console.log(formData);
 
     if ($("[name='title']").val() == "") {
-        $("[name='error']").removeClass('hidden');
-        $("[name='error']").html("标题不能为空");
+        $("#error").removeClass('hidden');
+        $("#error").html("标题不能为空");
         $("[name='title']").focus();
         return false;
     }
     else if ($("[name='content']").val() == "") {
-        $("[name='error']").removeClass('hidden');
-        $("[name='error']").html("内容不能为空");
+        $("#error").removeClass('hidden');
+        $("#error").html("内容不能为空");
         $("[name='content']").focus();
         return false;
     }
+    else if ($("[name='startDate']").val() >=$("[name='endDate']").val()) {
+        $("#error").removeClass('hidden');
+        $("#error").html("开始时间不能晚于结束时间");
+        $("[name='startDate']").focus();
+        return false;
+    }
+    else if ($("[name='deadline']").val() >=$("[name='startDate']").val()) {
+        $("#error").removeClass('hidden');
+        $("#error").html("截至时间不能晚于结束时间");
+        $("[name='deadline']").focus();
+        return false;
+    }
     else {
-        $("[name='error']").addClass('hidden');
+        $("#error").addClass('hidden');
         return true;
     }
     return true;

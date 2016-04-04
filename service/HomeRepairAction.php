@@ -51,6 +51,14 @@ elseif($_GET['act'] == 'queryAll'){
             }
             $sql="SELECT * FROM home_repair WHERE userId IN (".implode(',',$userIds).")";
         }
+        if(!empty($hr['phone'])){
+            $sql .= "AND phone LIKE '%" . $hr['phone']."%'";
+        }
+        if($hr['state']!=-1) {
+            $sql .= "AND state =" . $hr['state'];
+        }
+    }elseif(!empty($hr['phone'])){
+        $sql="SELECT * FROM home_repair WHERE phone LIKE '%" . $hr['phone']."%'";
         if($hr['state']!=-1) {
             $sql .= "AND state =" . $hr['state'];
         }
@@ -115,9 +123,9 @@ elseif ($_GET['act'] == 'del') {
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     if ($stmt->rowCount() > 0) {
-        echo '1000';//成功
+        echo '删除成功';
     } else {
-        echo "1001";//失败
+        echo "删除失败";
     }
 }
 //更新信息

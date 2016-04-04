@@ -7,7 +7,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-3 control-label">维修内容：</label>
+            <label class="col-sm-3 control-label"><span class="text-red">* </span>维修内容：</label>
             <div class="col-sm-9 ">
                 <input type="text" name="content" class="form-control" placeholder="维修内容">
             </div>
@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-3 control-label">联系电话：</label>
+            <label class="col-sm-3 control-label"><span class="text-red">* </span>联系电话：</label>
             <div class="col-sm-9 ">
                 <input type="tel" name="phone" class="form-control" placeholder="手机" maxlength="11" onkeyup="this.value=this.value.replace(/\D/g,'')">
             </div>
@@ -51,19 +51,19 @@
         <div class="form-group">
             <label class="col-sm-3 control-label">备注：</label>
             <div class="col-sm-9">
-                <textarea class="form-control" name="remark" placeholder="备注"></textarea>
+                <textarea class="form-control" name="remark" rows="6" placeholder="备注"></textarea>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label sr-only">错误</label>
             <div class="col-sm-9 ">
-                <div name="error" class="alert alert-danger hidden" role="alert">...</div>
+                <div id="error" class="alert alert-danger hidden" role="alert">...</div>
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-9  text-right">
-                <button type="button" class="btn btn-default"  onclick="javascript:sessionStorage.clear();" data-dismiss="modal">关闭 </button>
+                <button type="button" class="btn btn-default"  onclick="javascript:sessionStorage.removeItem('selUserId');" data-dismiss="modal">关闭 </button>
                 <button type="submit" class="btn btn-primary">确定</button>
             </div>
         </div>

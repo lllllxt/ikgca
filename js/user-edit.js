@@ -47,7 +47,7 @@ function getUserById() {
             }
         },
         error: function () {
-            alert("getUserById ajax error");
+            alert("帮我找程序员欧巴修修我！");
         }
     });
 }
@@ -59,6 +59,12 @@ if (sessionStorage.action == 'update') {
 else if (sessionStorage.action == 'add') {
     $('#imgForm').addClass("hidden");
     url = '../service/UserAction.php?act=add&';
+}
+else if (sessionStorage.action == 'query') {
+    getUserById();
+    $(".modal-body input").attr("disabled","disabled");
+    $(".modal-body button").attr("disabled","disabled");
+
 }
 
 var options = {
@@ -76,40 +82,23 @@ $('#userForm').submit(function () {
 });
 //提交前处理(表单验证)
 function showRequest(formData, jqForm, options) {
-    //console.log('提交前处理');
-    //console.log(formData);
-    //var isChange=false;
-    //$("#userForm :input").change(function() {
-    //    isChange=true;
-    //});
     if(confirm("确定提交吗？")){
-        //if(isChange){
-            if ($("[name='name']").val() == "") {
-                $("[name='error']").removeClass('hidden');
-                $("[name='error']").html("姓名不能为空");
-                $("[name='name']").focus();
-                return false;
-            }
-            else if ($("[name='phone']").val() == "") {
-                $("[name='error']").removeClass('hidden');
-                $("[name='error']").html("手机不能为空");
-                $("[name='phone']").focus();
-                return false;
-            }
-            else if ($("[name='phone']").val().length<11) {
-                $("[name='error']").removeClass('hidden');
-                $("[name='error']").html("请输入正确手机号");
-                $("[name='phone']").focus();
-                return false;
-            }
-            else {
-                $("[name='error']").addClass('hidden');
-                return true;
-            }
-        //}else{
-        //    alert("信息没有改动。");
-        //    return false;
-        //}
+        if ($("[name='name']").val() == "") {
+            $("#error").removeClass('hidden');
+            $("#error").html("姓名不能为空");
+            $("[name='name']").focus();
+            return false;
+        }
+        else if ($("[name='phone']").val() == "") {
+            $("#error").removeClass('hidden');
+            $("#error").html("手机不能为空");
+            $("[name='phone']").focus();
+            return false;
+        }
+        else {
+            $("#error").addClass('hidden');
+            return true;
+        }
     }else{
         return false;
     }
@@ -118,13 +107,13 @@ function showRequest(formData, jqForm, options) {
 }
 //处理完成
 function showResponse(responseText, statusText) {
-    //console.log(responseText);
-    if (responseText == 1000) {
+    if (responseText) {
         $('.close').click();
-        alert("提交成功");
+        alert(responseText);
         $('#body').load('../view/user-list.html');
     } else {
-        alert("提交失败。");
+        $("#error").removeClass('hidden');
+        $("#error").html(responseText);
     }
 }
 
@@ -171,19 +160,3 @@ function deleteImg(){
     }
 }
 /*--------------------------------------头像上传End-----------------------*/
-
-$("[name='phone']").blur(function(){
-    $.ajax({
-        type: "GET",
-        url: '../service/UserAction.php?act=checkPhone&',
-        data: {
-            'phone': $("[name='phone']").val()
-        },
-        success: function (data) {
-            if(data!=null && data != ""){
-                $("[name='error']").removeClass("hidden");
-                $("[name='error']").html(data);
-            }
-        }
-    });
-});

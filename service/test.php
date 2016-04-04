@@ -1,14 +1,19 @@
 <?php
-$arr = array(3, 4, 2);
+$pass = "123546";
+$name="正在";
+$a="jx".$pass;
+$a2="jx".$pass."1";
+echo "无敌加密后".md5(crypt($a,"123"))."<br>"; // 现在让黑客如何破这个密码？？？
+echo "无敌加密后".md5(crypt($a2,"123"))."<br>"; // 现在让黑客如何破这个密码？？？
+echo "加密后".md5($a)."<br>"; // 现在让黑客如何破这个密码？？？
+echo "加密后".md5($a2)."<br>"; // 现在让黑客如何破这个密码？？？
 
-for ($i = 0; $i < count($arr); $i++) {
-    for ($j = $i + 1; $j < count($arr) - $i - 1; $j++) {
-        if ($arr[$i] < $arr[$j]) {
-            $t = $arr[$i];
-            $arr[$i] =  $arr[$j];
-            $arr[$j] = $t;
-        }
-        print_r($arr);
-    }
+if(a()){
+    echo "123";
+}
+
+function a(){
+    echo "asd";
+    return false;
 }
 ?>

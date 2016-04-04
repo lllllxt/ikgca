@@ -10,6 +10,7 @@ $('#queryFrom').submit(function () {
     //获取搜索框内容
     hr.userName = $('#name').val();
     hr.state = $('#state').val();
+    hr.phone = $('#phone').val();
     // 提交表单
     $(this).ajaxSubmit({
         type: "POST",
@@ -56,7 +57,7 @@ $('#queryFrom').submit(function () {
         },
         error: function (data) {
             console.log(data);
-            alert("getHRList ajax error");
+            alert("我想见见程序员欧巴！");
         }
     });
     // 为了防止普通浏览器进行表单提交和产生页面导航（防止页面刷新？）返回false
@@ -88,8 +89,8 @@ function deleteById(id) {
             success: function (data) {
                 $('#body').load('home-repair-list.html');
             },
-            error: function () {
-                alert("deleteById ajax error");
+            error: function (data) {
+                alert(data.responseText);
             }
         });
     }

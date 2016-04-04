@@ -34,7 +34,7 @@ function getToolById() {
             }
         },
         error: function () {
-            alert("getToolById ajax error");
+            alert("帮我找程序员欧巴修修我！");
         }
     });
 }
@@ -68,7 +68,8 @@ $('#flowForm').submit(function () {
     if(confirm("确定提交吗？")){
         // 提交表单
         $(this).ajaxSubmit(options);
-        sessionStorage.clear();
+        sessionStorage.removeItem("selToolId");
+        sessionStorage.removeItem("selUserId");
     }
     // 为了防止普通浏览器进行表单提交和产生页面导航（防止页面刷新？）返回false
     return false;
@@ -78,39 +79,25 @@ function showRequest(formData, jqForm, options) {
     //console.log('提交前处理');
     //console.log(formData);
     if ($("[name='toolName']").val() == null || $("[name='toolName']").val() == '') {
-        $("[name='error']").removeClass('hidden');
-        $("[name='error']").html("请选择工具");
+        $("#error").removeClass('hidden');
+        $("#error").html("请选择工具");
         $("[name='toolName']").focus();
         return false;
     }
-    if ($("[name='userName']").val() == null || $("[name='userName']").val() == '') {
-        $("[name='error']").removeClass('hidden');
-        $("[name='error']").html("请选择出借人");
+    else if ($("[name='userName']").val() == null || $("[name='userName']").val() == '') {
+        $("#error").removeClass('hidden');
+        $("#error").html("请选择出借人");
         $("[name='userName']").focus();
         return false;
     }
-    if ($("[name='lendDate']").val() == null || $("[name='lendDate']").val() == '') {
-        $("[name='error']").removeClass('hidden');
-        $("[name='error']").html("出借时间不能为空");
+    else  if ($("[name='lendDate']").val() == null || $("[name='lendDate']").val() == '') {
+        $("#error").removeClass('hidden');
+        $("#error").html("出借时间不能为空");
         $("[name='lendDate']").focus();
         return false;
     }
-    //if ($("[name='lendDate']").val() < getDate() ) {
-    //    $("[name='error']").removeClass('hidden');
-    //    $("[name='error']").html("出借时间不能小于当前时间");
-    //    $("[name='lendDate']").focus();
-    //    return false;
-    //}
-    if($("[name='returnDate']").val() != null && $("[name='returnDate']").val() != ''){
-        if ($("[name='returnDate']").val() < $("[name='lendDate']").val() ) {
-            $("[name='error']").removeClass('hidden');
-            $("[name='error']").html("归还时间不能早于出借时间");
-            $("[name='returnDate']").focus();
-            return false;
-        }
-    }
     else {
-        $("[name='error']").addClass('hidden');
+        $("#error").addClass('hidden');
         return true;
     }
     return true;

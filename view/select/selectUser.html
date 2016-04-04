@@ -61,8 +61,12 @@
     var user = {};
     var pageSize=7;//分页容量
     var pageNum=1; //默认页数
+
     //获取列表
     $('#queryFrom-select').submit(function () {
+        if(sessionStorage.selPow!=""||sessionStorage.selPow!=null){
+            user.power=sessionStorage.selPow;
+        }
         //获取搜索框内容
         user.name = $('#name_sel').val();
         // 提交表单
@@ -93,7 +97,8 @@
                     $('#sel-page-nav').append("<li><a href='#' onclick='queryByPage("+(i+1)+")'>"+(i+1)+"</a></li>");
                 }
             },
-            error: function () {
+            error: function (data) {
+                console.log(data);
                 alert("getUsersList ajax error");
             }
         });

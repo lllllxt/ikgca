@@ -77,15 +77,29 @@ elseif ($_GET['act'] == 'add') {
 }
 //通过Id删除
 elseif ($_GET['act'] == 'del') {
-    if(isset($_POST['toolId'])){
-        $sql = "DELETE FROM tool WHERE id=".$_POST['toolId'];
-    }
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute();
-    if ($stmt->rowCount() > 0) {
-        echo '1000';//成功
-    } else {
-        echo "1001";//失败
+
+    try {
+        //    开启事务
+        $pdo->beginTransaction();
+        if(isset($_POST['toolId'])){
+            $sql = "DELETE FROM tool WHERE id= ?";
+        }
+        $stmt = $pdo->prepare($sql);
+
+        $flow_sql = "DELETE FROM tool_flow WHERE toolId= ?";
+        $flow_stmt = $pdo->prepare($flow_sql);
+
+        $stmt->execute(array($_POST['toolId']));
+        $flow_stmt->execute(array($_POST['toolId']));
+
+        //    提交事务
+        $pdo->commit();
+        echo '删除成功';
+    } catch (PDOException $e) {
+        echo "删除失败";
+        die("异常：" . $e->getMessage());
+        //    回滚事务
+        $pdo->rollBack();
     }
 }
 //更新信息
@@ -290,9 +304,9 @@ elseif ($_GET['act'] == 'delFlow') {
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     if ($stmt->rowCount() > 0) {
-        echo '1000';//成功
+        echo '删除成功';
     } else {
-        echo "1001";//失败
+        echo "删除失败";
     }
 }
 //更新信息
@@ -343,12 +357,13 @@ elseif($_GET['act']=="gongju") {
     while( $row = $stmt->fetch(PDO::FETCH_ASSOC)){
         $isExist=false;
         for($i=0;$i<count($toolList);$i++){
-            if($toolList[$i]==1){
-                $toolList[$i]++;
-            }
             if($toolList[$i]["name"]==$row['name']){
                 $toolList[$i]["count"]++;
                 $isExist=true;
+
+                if($row["state"]==1){
+                    $toolList[$i]["lendCount"]++;
+                }
             }
         }
         if(!$isExist){

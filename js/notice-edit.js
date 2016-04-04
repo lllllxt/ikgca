@@ -59,19 +59,19 @@ function showRequest(formData, jqForm, options) {
     //console.log(formData);
 
     if ($("[name='title']").val() == "") {
-        $("[name='error']").removeClass('hidden');
-        $("[name='error']").html("标题不能为空");
+        $("#error").removeClass('hidden');
+        $("#error").html("标题不能为空");
         $("[name='title']").focus();
         return false;
     }
     else if ($("[name='content']").val() == "") {
-        $("[name='error']").removeClass('hidden');
-        $("[name='error']").html("内容不能为空");
+        $("#error").removeClass('hidden');
+        $("#error").html("内容不能为空");
         $("[name='content']").focus();
         return false;
     }
     else {
-        $("[name='error']").addClass('hidden');
+        $("#error").addClass('hidden');
         return true;
     }
     return true;

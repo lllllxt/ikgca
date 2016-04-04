@@ -52,7 +52,7 @@ $('#queryFrom').submit(function () {
         },
         error: function (data) {
             console.log(data);
-            alert("getFlowsList ajax error");
+            alert("我想见见程序员欧巴！");
         }
     });
     // 为了防止普通浏览器进行表单提交和产生页面导航（防止页面刷新？）返回false
@@ -84,8 +84,8 @@ function deleteById(id) {
             success: function () {
                 $('#body').load('tool-flow.html');
             },
-            error: function () {
-                alert("deleteById ajax error");
+            error: function (data) {
+                alert(data.responseText+"");
             }
         });
     }

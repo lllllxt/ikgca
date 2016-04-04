@@ -103,9 +103,9 @@ elseif ($_GET['act'] == 'del') {
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     if ($stmt->rowCount() > 0) {
-        echo '1000';//成功
+        echo '删除成功';//成功
     } else {
-        echo "1001";//失败
+        echo "删除失败";//失败
     }
 }
 //更新信息

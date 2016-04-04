@@ -34,7 +34,8 @@ $('#queryFrom').submit(function () {
                 "<td>"+data[i].address+"</td>" +
                 "<td>" +
                 "<a href='#' onclick='deleteUserById("+data[i].id+")'><span class='glyphicon glyphicon-remove'></span>删除</a>  " +
-                "<a href='#' onclick='updateUserById("+data[i].id+")' data-toggle='modal' data-target='#myModal'><span class='glyphicon glyphicon-edit'></span>修改</a>" +
+                "<a href='#' onclick='updateUserById("+data[i].id+")' data-toggle='modal' data-target='#myModal'><span class='glyphicon glyphicon-edit'></span>修改</a> " +
+                "<a href='#' onclick='queryUserById("+data[i].id+")' data-toggle='modal' data-target='#myModal'><span class='glyphicon glyphicon-search'></span>查看</a> " +
                 "</td>" +
                 "</tr>");
             }
@@ -49,7 +50,7 @@ $('#queryFrom').submit(function () {
         },
         error: function (data) {
             console.log(data);
-            alert("getUsersList ajax error");
+            alert("我想见见程序员欧巴！");
         }
     });
     // 为了防止普通浏览器进行表单提交和产生页面导航（防止页面刷新？）返回false
@@ -78,11 +79,11 @@ function deleteUserById(id) {
                 'userId': id
             },
             dataType: "json",
-            success: function (data) {
+            success: function () {
                 $('#body').load('user-list.html');
             },
-            error: function () {
-                alert("deleteUserById ajax error");
+            error: function (data) {
+                alert(data.responseText);
             }
         });
     }
@@ -91,5 +92,11 @@ function deleteUserById(id) {
 function updateUserById(id) {
     sessionStorage.action = 'update';//设置操作
     sessionStorage.id = id;//设置成员id
+    $('.modal-body').load('user-edit.html');
+}
+//查看
+function queryUserById(id){
+    sessionStorage.action = 'query';
+    sessionStorage.id = id;
     $('.modal-body').load('user-edit.html');
 }
