@@ -11,6 +11,27 @@ try {
     die("连接数据库异常：" . $e->getMessage());
 }
 date_default_timezone_set('Asia/Shanghai');//设置时区
+$dateNow=date('Y-m-d',time());//当前年月日
+
+//刷新活动状态
+$sql = "SELECT * FROM activity";
+$stmt = $pdo->prepare($sql);
+$stmt ->execute();
+while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+    if($row['acState']!=4){//取消
+        if($dateNow > $row['endDate']){//结束
+            setState(2,$row['id']);
+        }elseif($dateNow >= $row['startDate']){//进行中
+            setState(1,$row['id']);
+        }elseif($dateNow >= $row['deadline']){//报名中
+            setState(3,$row['id']);
+        }elseif($dateNow < $row['deadline']){//未开始
+            setState(0,$row['id']);
+        }
+    }
+}
+
+
 //通过Id查询 done
 if ($_GET['act'] == 'query') {
     if(isset($_GET['activityId'])){
@@ -38,7 +59,7 @@ if ($_GET['act'] == 'query') {
     }
     echo json_encode($activityList);
 }
-//条件查询 done 升级版
+//条件查询
 elseif($_GET['act'] == 'queryAll'){
     $activity=$_POST['activity'];
     if(!empty($activity['userName'])){
@@ -107,8 +128,26 @@ elseif ($_GET['act'] == 'add') {
     $createDate = date('Y-m-d H:i:s',time());
     $userId = $_POST['userId'];
     $startDate = $_POST['startDate'];
-    $endDate = $_POST['endDate'];
-    $deadline = $_POST['deadline'];
+    if(empty($_POST['endDate'])){
+        $endDate=$startDate;
+    }
+    else{
+        $endDate = $_POST['endDate'];
+        if($startDate > $endDate){
+            echo "开始时间不能晚于结束时间";
+            exit;
+        }
+    }
+    if(empty($_POST['deadline'])){
+        $deadline=$startDate;
+    }
+    else{
+        $deadline = $_POST['deadline'];
+        if($deadline > $startDate){
+            echo "报名截止时间不能晚于开始时间";
+            exit;
+        }
+    }
     $leaderId = $_POST['leaderId'];
     $acAddress = $_POST['acAddress'];
     $fee = $_POST['fee'];
@@ -127,7 +166,7 @@ elseif ($_GET['act'] == 'add') {
         echo "1001";//失败
     }
 }
-//通过Id删除 done
+//通过Id删除
 elseif ($_GET['act'] == 'del') {
     if(isset($_POST['activityId'])){
         $sql = "DELETE FROM activity WHERE id=".$_POST['activityId'];
@@ -135,7 +174,7 @@ elseif ($_GET['act'] == 'del') {
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     if ($stmt->rowCount() > 0) {
-        echo '删除成功';
+        echo 1000;
     } else {
         echo "删除失败";
     }
@@ -145,28 +184,56 @@ elseif ($_GET['act'] == 'update') {
     $title = $_POST['title'];
     $content = $_POST['content'];
     $startDate = $_POST['startDate'];
-    $endDate = $_POST['endDate'];
-    $deadline = $_POST['deadline'];
+    if(empty($_POST['endDate'])){
+        $endDate=$startDate;
+    }
+    else{
+        $endDate = $_POST['endDate'];
+        if($startDate > $endDate){
+            echo "开始时间不能晚于结束时间";
+            exit;
+        }
+    }
+    if(empty($_POST['deadline'])){
+        $deadline=$startDate;
+    }
+    else{
+        $deadline = $_POST['deadline'];
+        if($deadline > $startDate){
+            echo "报名截止时间不能晚于开始时间";
+            exit;
+        }
+    }
     $leaderId = $_POST['leaderId'];
     $acAddress = $_POST['acAddress'];
     $fee = $_POST['fee'];
-    $acState = $_POST['acState'];
     $id = $_POST['id'];
-
+    if(isset($_POST['acState']) && $_POST['acState']==4){
+        $acState = $_POST['acState'];
+    }else{
+        if($dateNow > $endDate){
+            $acState=2;
+        }elseif($dateNow >= $startDate){
+            $acState=1;
+        }elseif($dateNow >= $deadline){
+            $acState=3;
+        }elseif($dateNow < $deadline){
+            $acState=0;
+        }
+    }
     $sql = "UPDATE activity SET title=?,content=?,startDate=?,endDate=?,deadline=?,leaderId=?,acAddress=?,fee=?,acState=? WHERE id=?";
     $stmt = $pdo->prepare($sql);
-
     $stmt->execute(array($title, $content, $startDate, $endDate, $deadline, $leaderId, $acAddress, $fee, $acState, $id));
+
     if ($stmt->rowCount() > 0) {
         echo '1000';//成功
     } else {
-        echo "1001";//失败
+        echo "没有修改信息，无需重新提交";//失败
     }
 }
 
 //本月活動概要
 elseif ($_GET['act'] == 'huodong'){
-    $dateNow=date('Y-m-d',time());
     $sql="SELECT * FROM activity WHERE startDate >= '$dateNow' ORDER BY startDate ASC ";
     $stmt = $pdo->prepare($sql);
     $stmt ->execute();
@@ -182,4 +249,16 @@ elseif ($_GET['act'] == 'huodong'){
         array_push($result,$row);
     }
     echo json_encode($result);
+}
+
+/*------------function------------*/
+function setState($state,$id){
+    try {
+        $pdo = getConnect();
+    } catch (PDOException $e) {
+        die("连接数据库异常：" . $e->getMessage());
+    }
+    $sql="UPDATE activity SET acState=? WHERE id=?";
+    $stmt = $pdo->prepare($sql);
+    $stmt -> execute(array($state,$id));
 }

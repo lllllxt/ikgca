@@ -75,20 +75,14 @@
         <div class="form-group">
             <label class="col-sm-3 control-label">活动状态：</label>
             <div class="col-sm-9 ">
-                <label class="radio-inline">
-                    <input type="radio" name="acState" value="0" checked> 未开始
-                </label>
-                <label class="radio-inline">
-                    <input type="radio" name="acState" value="1"> 进行中
-                </label>
-                <label class="radio-inline">
-                    <input type="radio" name="acState" value="2"> 已结束
-                </label>
-                <label class="radio-inline">
-                    <input type="radio" name="acState" value="3"> 报名中
-                </label>
-                <label class="radio-inline">
-                    <input type="radio" name="acState" value="4"> 已取消
+                <span class="acState0 label label-primary hidden">未开始</span>
+                <span class="acState1 label label-info hidden">进行中..</span>
+                <span class="acState2 label label-success hidden">已结束</span>
+                <span class="acState3 label label-warning hidden">报名中..</span>
+                <span class="acState4 label label-default hidden">已取消</span>
+                <br/>
+                <label class="checkbox-inline">
+                    <input type="checkbox" name="acState" value="4">是否取消该活动
                 </label>
             </div>
         </div>

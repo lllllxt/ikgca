@@ -38,7 +38,7 @@ $('#queryFrom').submit(function () {
                 }
                 $('tbody').append("<tr>" +
                 "<td>"+data[i].title+"</td>" +
-                "<td>"+data[i].content+"</td>" +
+                "<td>"+data[i].content.substring(0,25)+'…'+"</td>" +
                 "<td>"+data[i].createDate+"</td>" +
                 "<td>"+data[i].startDate+"</td>" +
                 "<td>"+data[i].leaderName+"</td>" +

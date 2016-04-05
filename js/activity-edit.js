@@ -28,15 +28,16 @@ function getActivityById() {
             $("[name='fee']").val(data[0].fee);
             //$("[name='signInList']").val(data[0].signInList);
             if(data[0].acState==0){
-                $(":radio[value='0']").attr("checked", true);
+                $(".acState0").removeClass('hidden');
             }else if(data[0].acState==1){
-                $(":radio[value='1']").attr("checked", true);
+                $(".acState1").removeClass('hidden');
             }else if(data[0].acState==2){
-                $(":radio[value='2']").attr("checked", true);
+                $(".acState2").removeClass('hidden');
             }else if(data[0].acState==3){
-                $(":radio[value='3']").attr("checked", true);
+                $(".acState3").removeClass('hidden');
             }else if(data[0].acState==4){
-                $(":radio[value='4']").attr("checked", true);
+                $(".acState4").removeClass('hidden');
+                $(":checkbox[value='4']").attr('checked',true);
             }
 
             if(sessionStorage.selUserId){
@@ -87,9 +88,6 @@ $('#activityForm').submit(function () {
 });
 //提交前处理(表单验证)
 function showRequest(formData, jqForm, options) {
-    //console.log('提交前处理');
-    //console.log(formData);
-
     if ($("[name='title']").val() == "") {
         $("#error").removeClass('hidden');
         $("#error").html("标题不能为空");
@@ -100,18 +98,6 @@ function showRequest(formData, jqForm, options) {
         $("#error").removeClass('hidden');
         $("#error").html("内容不能为空");
         $("[name='content']").focus();
-        return false;
-    }
-    else if ($("[name='startDate']").val() >=$("[name='endDate']").val()) {
-        $("#error").removeClass('hidden');
-        $("#error").html("开始时间不能晚于结束时间");
-        $("[name='startDate']").focus();
-        return false;
-    }
-    else if ($("[name='deadline']").val() >=$("[name='startDate']").val()) {
-        $("#error").removeClass('hidden');
-        $("#error").html("截至时间不能晚于结束时间");
-        $("[name='deadline']").focus();
         return false;
     }
     else {
@@ -128,7 +114,8 @@ function showResponse(responseText, statusText,data) {
         alert("提交成功");
         $('#body').load('../view/activity-list.html');
     } else {
-        alert("提交失败");
+        $("#error").removeClass('hidden');
+        $("#error").html(responseText);
     }
 }
 

@@ -34,7 +34,7 @@ $('#queryFrom').submit(function () {
                 "<td>"+data[i].shortPhone+"</td>" +
                 "<td>"+data[i].address+"</td>" +
                 "<td>" +
-                "<a href='#' onclick='deleteUserById("+data[i].id+")'><span class='glyphicon glyphicon-remove'></span>删除</a>  " +
+                "<a href='#' onclick='deleteByIds("+data[i].id+")'><span class='glyphicon glyphicon-remove'></span>删除</a>  " +
                 "<a href='#' onclick='updateUserById("+data[i].id+")' data-toggle='modal' data-target='#myModal'><span class='glyphicon glyphicon-edit'></span>修改</a> " +
                 "<a href='#' onclick='queryUserById("+data[i].id+")' data-toggle='modal' data-target='#myModal'><span class='glyphicon glyphicon-search'></span>查看</a> " +
                 "</td>" +
@@ -65,29 +65,41 @@ function queryByPage(num){
     $('#queryFrom').submit();
 }
 
-//新增
-function addUser(){
-    sessionStorage.action = 'add';//设置操作
-    $('.modal-body').load('user-edit.html');
-}
 //删除
-function deleteUserById(id) {
-    if(confirm('确实要删除该内容吗?')){
+function deleteByIds(id){
+    var ids="-1";
+    if(id){
+        ids = id;
+    }else{
+        $("input[type='checkbox']").each(function () {
+            if($(this).is(':checked')){
+                ids = ids +","+ $(this).attr('id');
+            }
+        });
+    }
+    if(confirm('确实要删除该成员吗?')){
         $.ajax({
             type: "post",
-            url: '../service/UserAction.php?act=del&',
+            url: '../service/UserAction.php?act=delByIds&',
             data: {
-                'userId': id
+                'Ids': ids
             },
             dataType: "json",
-            success: function () {
+            success: function (data) {
+                console.log(data);
                 $('#body').load('user-list.html');
             },
             error: function (data) {
+                console.log(data);
                 alert(data.responseText);
             }
         });
     }
+}
+//新增
+function addUser(){
+    sessionStorage.action = 'add';//设置操作
+    $('.modal-body').load('user-edit.html');
 }
 //修改
 function updateUserById(id) {

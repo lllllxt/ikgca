@@ -107,9 +107,9 @@ function showRequest(formData, jqForm, options) {
 }
 //处理完成
 function showResponse(responseText, statusText) {
-    if (responseText) {
+    if (responseText==1000) {
         $('.close').click();
-        alert(responseText);
+        alert("提交成功");
         $('#body').load('../view/user-list.html');
     } else {
         $("#error").removeClass('hidden');

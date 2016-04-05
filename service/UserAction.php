@@ -104,36 +104,23 @@ elseif ($_GET['act'] == 'add') {
 
         $stmt->execute(array($name, $birthDate, $sex, $address, $phone,$shortPhone,$password,$qq,$power));
         if ($stmt->rowCount() > 0) {
-            echo '1000';//成功
+            echo 1000;//成功
         } else {
             echo "提交失败";//失败
         }
-    }
-}
-//通过Id删除
-elseif ($_GET['act'] == 'del') {
-    if(isset($_POST['userId'])){
-        $sql = "DELETE FROM user WHERE id=".$_POST['userId'];
-    }
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute();
-    if ($stmt->rowCount() > 0) {
-        echo '删除成功';//成功
-    } else {
-        echo "删除失败";//失败
     }
 }
 //批量删除
 elseif ($_GET['act'] == 'delByIds') {
     if(isset($_POST['Ids'])){
         $sql = "DELETE FROM user WHERE id IN (".$_POST['Ids'].")";
-    }
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute();
-    if ($stmt->rowCount() > 0) {
-        echo '删除成功';//成功
-    } else {
-        echo "删除失败";//失败
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        if ($stmt->rowCount() > 0) {
+            echo 1000;//成功
+        } else {
+            echo "删除失败";//失败
+        }
     }
 }
 //更新信息
@@ -154,7 +141,7 @@ elseif ($_GET['act'] == 'update') {
 
        $stmt->execute(array($name, $birthDate, $sex, $address, $phone,$shortPhone,$qq,$power,$id));
        if ($stmt->rowCount() > 0) {
-           echo '信息已更新';//成功
+           echo 1000;//成功
        } else {
            echo "信息没有改动，无需提交";//失败
        }
