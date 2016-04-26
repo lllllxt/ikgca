@@ -79,9 +79,9 @@ var options = {
 // 绑定表单提交事件处理器
 $('#activityForm').submit(function () {
     if(confirm("确定提交吗？")){
+        sessionStorage.removeItem("selUserId");
         // 提交表单
         $(this).ajaxSubmit(options);
-        sessionStorage.removeItem("selUserId");
     }
     // 为了防止普通浏览器进行表单提交和产生页面导航（防止页面刷新？）返回false
     return false;
@@ -100,17 +100,23 @@ function showRequest(formData, jqForm, options) {
         $("[name='content']").focus();
         return false;
     }
+    else if ($("[name='startDate']").val() == "") {
+        $("#error").removeClass('hidden');
+        $("#error").html("开始时间不能为空");
+        $("[name='startDate']").focus();
+        return false;
+    }
     else {
         $("#error").addClass('hidden');
         return true;
     }
-    return true;
 }
 //处理完成
 function showResponse(responseText, statusText,data) {
     console.log(data);
     if (responseText == 1000) {
         $('.close').click();
+        $('.modal-backdrop').remove();
         alert("提交成功");
         $('#body').load('../view/activity-list.html');
     } else {

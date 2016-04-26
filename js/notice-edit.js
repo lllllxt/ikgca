@@ -81,6 +81,7 @@ function showResponse(responseText, statusText,data) {
     console.log(data);
     if (responseText == 1000) {
         $('.close').click();
+        $('.modal-backdrop').remove();
         alert("提交成功");
         $('#body').load('../view/notice-list.html');
     } else {

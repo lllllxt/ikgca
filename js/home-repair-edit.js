@@ -96,7 +96,8 @@ function showRequest(formData, jqForm, options) {
 function showResponse(responseText, statusText) {
     //console.log(responseText);
     if (responseText == 1000) {
-        $('.close').click();
+        $('.close').click()
+        $('.modal-backdrop').remove();
         alert("提交成功");
         $('#body').load('../view/home-repair-list.html');
     } else {

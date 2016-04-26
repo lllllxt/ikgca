@@ -107,10 +107,12 @@ function showResponse(responseText, statusText) {
     //console.log(responseText);
     if (responseText == 1000) {
         $('.close').click();
+        $('.modal-backdrop').remove();
         alert("提交成功");
         $('#body').load('../view/tool-flow.html');
     } else {
-        alert("提交出错！");
+        console.log(responseText);
+        alert(responseText);
     }
 }
 

@@ -179,12 +179,13 @@ elseif($_GET['act'] == 'paihang'){
     //排序
     for($i=0;$i<count($result);$i++){
         for($j=$i+1;$j<count($result)-$i-1;$j++){
-            if($result[$i]['count'] < $result[$j]['count']){
-                $t=$result[$i];
-                $result[$i]=$result[$j];
+            if($result[$j-1]['count'] < $result[$j]['count']){
+                $t=$result[$j-1];
+                $result[$j-1]=$result[$j];
                 $result[$j]=$t;
             }
         }
     }
     echo json_encode($result);
+
 }

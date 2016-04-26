@@ -81,11 +81,13 @@ function deleteById(id) {
             },
             dataType: "json",
             success: function (data) {
+                console.log(data);
                 $('#body').load('tool-list.html');
             },
             error:  function (data) {
-                console.log(data.responseText);
-                alert(data.responseText+"我想见见程序员欧巴！");
+                console.log(data);
+                alert(data.responseText);
+                $('#body').load('tool-list.html');
             }
         });
     }

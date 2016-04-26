@@ -29,10 +29,6 @@ function loadActivityList() {
     openLoading();
     $('#body').load('activity-list.html');
 }
-function loadLottery() {
-    openLoading();
-    $('#body').load('lottery.html');
-}
 
 //页面效果
 $('#menu li').click(function () {

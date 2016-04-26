@@ -79,6 +79,7 @@ function showResponse(responseText, statusText) {
     if (responseText == 1000) {
         alert("提交成功");
         $('.close').click();
+        $('.modal-backdrop').remove();
         $('#body').load('../view/tool-list.html');
     } else {
         alert("骗我呢，你有修改信息吗？");

@@ -25,6 +25,9 @@ $('#queryFrom').submit(function () {
             console.log(data);
             $('tbody tr').remove();
             for (var i = 0; i < data.length-1; i++) {
+                if(data[i].leaderName=="" || data[i].leaderName ==null){
+                    data[i].leaderName="所有干部"
+                }
                 if(data[i].acState == 0){
                     data[i].acState = "<span class='label label-primary'>未开始</span>"
                 }else if(data[i].acState == 1){
@@ -95,6 +98,7 @@ function deleteById(id) {
             },
             error: function (data) {
                 alert(data.responseText);
+                $('#body').load('activity-list.html');
             }
         });
     }

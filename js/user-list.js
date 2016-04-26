@@ -92,6 +92,7 @@ function deleteByIds(id){
             error: function (data) {
                 console.log(data);
                 alert(data.responseText);
+                $('#body').load('user-list.html');
             }
         });
     }

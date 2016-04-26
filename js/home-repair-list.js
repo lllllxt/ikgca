@@ -91,6 +91,7 @@ function deleteById(id) {
             },
             error: function (data) {
                 alert(data.responseText);
+                $('#body').load('home-repair-list.html');
             }
         });
     }

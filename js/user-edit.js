@@ -109,6 +109,7 @@ function showRequest(formData, jqForm, options) {
 function showResponse(responseText, statusText) {
     if (responseText==1000) {
         $('.close').click();
+        $('.modal-backdrop').remove();
         alert("提交成功");
         $('#body').load('../view/user-list.html');
     } else {

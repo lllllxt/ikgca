@@ -151,14 +151,18 @@ elseif ($_GET['act'] == 'add') {
     $leaderId = $_POST['leaderId'];
     $acAddress = $_POST['acAddress'];
     $fee = $_POST['fee'];
-//    $signInList = $_POST['signInList'];
-    $acState = $_POST['acState'];
-
-//    $sql = "INSERT INTO activity(title, content, createDate, userId,startDate,endDate,deadline,leaderId,acAddress,fee,signInList,acState) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+    if($dateNow > $endDate){
+        $acState=2;
+    }elseif($dateNow >= $startDate){
+        $acState=1;
+    }elseif($dateNow >= $deadline){
+        $acState=3;
+    }elseif($dateNow < $deadline){
+        $acState=0;
+    }
     $sql = "INSERT INTO activity(title, content, createDate, userId,startDate,endDate,deadline,leaderId,acAddress,fee,acState) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
     $stmt = $pdo->prepare($sql);
 
-//    $stmt->execute(array($title, $content, $createDate, $userId,$startDate, $endDate, $deadline, $leaderId, $acAddress, $fee, $signInList, $acState));
     $stmt->execute(array($title, $content, $createDate, $userId,$startDate, $endDate, $deadline, $leaderId, $acAddress, $fee,$acState));
     if ($stmt->rowCount() > 0) {
         echo '1000';//成功

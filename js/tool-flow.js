@@ -81,11 +81,13 @@ function deleteById(id) {
                 'flowId': id
             },
             dataType: "json",
-            success: function () {
+            success: function (data) {
+                console.log(data);
                 $('#body').load('tool-flow.html');
             },
             error: function (data) {
                 alert(data.responseText+"");
+                $('#body').load('tool-flow.html');
             }
         });
     }
